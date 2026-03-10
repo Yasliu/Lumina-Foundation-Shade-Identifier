@@ -7,7 +7,7 @@ sdk: docker
 pinned: false
 ---
 
-# Foundation Shade Identifier
+# Lumina : Foundation Shade Identifier
 
 An end-to-end computer vision and machine learning pipeline designed to find the mathematically perfect foundation makeup match from a single selfie.
 
