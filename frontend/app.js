@@ -1,6 +1,6 @@
 // app.js
 
-const API_URL = 'http://127.0.0.1:8000/analyze-shade';
+const API_URL = 'https://yasliu-lumina-engine.hf.space/analyze-shade';
 
 document.addEventListener('DOMContentLoaded', () => {
 

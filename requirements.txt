@@ -1,9 +1,9 @@
 fastapi
+uvicorn
+python-multipart
 mediapipe
 numpy
-opencv_contrib_python
-opencv_python
-opencv_python_headless
+opencv-python-headless
 pandas
-scikit_learn
+scikit-learn
 scikit-image
