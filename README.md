@@ -30,4 +30,4 @@ Instead of relying on basic Hex/RGB comparisons which fail to accurately represe
 
 ## Live Demo
 
-**[https://foundation-shade-identifier.streamlit.app/]**
+**[https://lumina-foundation.vercel.app/]**
