@@ -1,8 +1,7 @@
-streamlit
-pandas
-numpy
+fastapi
+uvicorn
+python-multipart
 opencv-python-headless
 mediapipe
-scikit-learn
-scikit-image
-Pillow
+pandas
+numpy
