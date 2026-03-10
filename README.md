@@ -22,7 +22,7 @@ Instead of relying on basic Hex/RGB comparisons which fail to accurately represe
 
 ## Tech Stack
 
-- **Frontend:** HTML, CSS, Vanilla JavaScript (UI/UX codebase fully generated and handled by AI Agent). Hosted on Vercel.
+- **Frontend:** HTML, CSS, Vanilla JavaScript. Hosted on Vercel.
 - **Backend & API:** FastAPI, Uvicorn, Python. Containerized via Docker and hosted on Hugging Face Spaces.
 - **Computer Vision:** OpenCV, MediaPipe.
 - **Data Engineering & Math:** Pandas, NumPy, Scikit-Image.
