@@ -6,94 +6,97 @@
     <meta name="darkreader-lock">
     <meta name="color-scheme" content="light only">
     <title>LUMINA | The Premium Shade Finder</title>
-    <!-- Massive and Elegant Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="app-layout">
-        
-        <!-- Left Column: Control Center -->
-        <section class="control-center">
-            
-            <header class="brand-header">
-                <h1 class="brand-title">Lumina.</h1>
-                <p class="brand-subtitle">Discover your skin's true match with absolute precision.</p>
-            </header>
+    <div class="page-wrapper">
 
-            <div class="interaction-zone">
-                
-                <!-- Action Tabs -->
-                <div class="action-tabs">
-                    <button class="tab-btn active" id="tab-upload">Upload Photo</button>
-                    <button class="tab-btn" id="tab-camera">Take Photo</button>
-                </div>
+        <!-- Header -->
+        <header class="brand-header">
+            <h1 class="brand-title">Lumina.</h1>
+            <p class="brand-subtitle">Discover your skin's true match with absolute precision.</p>
+        </header>
 
-                <!-- Pane: Upload -->
-                <div class="action-pane active-pane" id="pane-upload">
-                    <div class="dropzone" id="dropzone">
-                        <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp" hidden>
-                        <div class="dropzone-content" id="dropzone-content">
-                            <span class="plus-icon">+</span>
-                            <span class="dropzone-text">Drop a high-resolution selfie here<br>or click to browse</span>
-                        </div>
-                        <div class="preview-container" id="preview-container" style="display: none;">
-                            <img id="image-preview" src="" alt="Selected image">
-                            <button class="icon-btn" id="remove-btn" type="button" title="Remove">&times;</button>
-                        </div>
+        <!-- Main Input Card -->
+        <main class="app-card" id="app-card">
+
+            <!-- Action Tabs -->
+            <div class="action-tabs">
+                <button class="tab-btn active" id="tab-upload">Upload Photo</button>
+                <button class="tab-btn" id="tab-camera">Take a Photo</button>
+            </div>
+
+            <!-- Pane: Upload -->
+            <div class="action-pane active-pane" id="pane-upload">
+                <div class="dropzone" id="dropzone">
+                    <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp" hidden>
+                    <div class="dropzone-content" id="dropzone-content">
+                        <span class="plus-icon">+</span>
+                        <span class="dropzone-text">Drop a high-resolution selfie<br>where your face is well lit</span>
+                    </div>
+                    <div class="preview-container" id="preview-container" style="display: none;">
+                        <img id="image-preview" src="" alt="Selected image">
+                        <button class="icon-btn" id="remove-btn" type="button" title="Remove">&times;</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Pane: Camera -->
-                <div class="action-pane" id="pane-camera" style="display: none;">
-                    <div class="camera-container" id="camera-container">
-                        <video id="webcam-video" autoplay playsinline></video>
-                        <div class="camera-overlay">
-                            <button class="camera-action-btn" id="snap-btn">Snap Selfie</button>
-                        </div>
-                    </div>
-                    <!-- Hidden canvas for capturing the frame -->
-                    <canvas id="camera-canvas" style="display: none;"></canvas>
+            <!-- Pane: Camera -->
+            <div class="action-pane" id="pane-camera" style="display: none;">
+                <div class="camera-container" id="camera-container">
+                    <video id="webcam-video" autoplay playsinline></video>
                 </div>
+                <!-- Hidden canvas for capturing the frame -->
+                <canvas id="camera-canvas" style="display: none;"></canvas>
+                <button class="capture-btn" id="capture-btn">Take Photo</button>
+            </div>
 
-                <!-- Flow Controls -->
-                <div class="controls">
+            <!-- Flow Controls -->
+            <div class="controls">
+                <div class="find-match-wrapper">
                     <button class="primary-btn" id="analyze-btn" disabled>Find My Match</button>
+                    <span class="help-icon" id="help-icon" title="">?</span>
                 </div>
-                
-                <!-- Loading State overlayting the control center or results -->
-                <div class="status-msg" id="status-msg" style="display: none;">
-                    <div class="premium-spinner"></div>
-                    <span id="status-text">Analyzing pigmentation...</span>
-                </div>
-
             </div>
 
-            <footer class="control-footer">
-                <p>Ensuring privacy. Photos are not saved.</p>
-            </footer>
-
-        </section>
-
-        <!-- Right Column: Results -->
-        <section class="results-container" id="results-container">
-            <!-- Results dynamically injected here -->
-            <div class="empty-results-state" id="empty-state">
-                <div class="decorative-line"></div>
-                <p>Your flawless matches will appear here.</p>
+            <!-- Loading State -->
+            <div class="status-msg" id="status-msg" style="display: none;">
+                <div class="premium-spinner"></div>
+                <span id="status-text">Analyzing pigmentation...</span>
             </div>
-            
+
+        </main>
+
+        <!-- Results Section (shown after analysis) -->
+        <section class="results-section" id="results-container" style="display: none;">
             <div class="matches-grid" id="matches-grid">
-                <!-- Cards injected here by JS -->
+                <!-- Pill cards injected here by JS -->
             </div>
-            
-            <button class="secondary-btn" id="reset-btn" style="display: none;">Start Over</button>
+            <button class="primary-btn secondary-btn" id="reset-btn">Start Over</button>
         </section>
 
-    </main>
+        <!-- Footer -->
+        <footer class="page-footer">
+            <p>Ensuring privacy. Photos are not saved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Well-Lit Modal -->
+    <div class="modal-overlay" id="well-lit-modal" aria-modal="true" role="dialog" aria-label="Well-lit face guide">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+            <img src="../image/Test2.jpg" alt="Example of a well-lit face" class="modal-img">
+            <p class="modal-caption">
+                Stand directly in front of a white light source, facing it head-on.<br>
+                Avoid shadows on your face for the most accurate skin tone extraction.
+            </p>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
