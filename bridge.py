@@ -31,7 +31,5 @@ async def analyze_shade(file: UploadFile = File(...)):
 
     result = find_comparison(img_rgb)
 
-    final_data = result.to_dict(orient="records")
-
-    return final_data
+    return result
 
