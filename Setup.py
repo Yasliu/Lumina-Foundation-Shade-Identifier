@@ -38,29 +38,33 @@ def find_comparison(image):
         face = detection_result.face_landmarks[0]
 
         # we are going for the left cheek polygon
-        cheek_indices = [117, 118, 101, 121, 47, 126, 209]
+        left_cheek_indices = [117, 118, 101, 121, 47, 126, 209]
+        right_cheek_indices = [346, 347, 330, 350, 277, 355, 429]
 
-        polygon_points = np.array([
-            [int(face[i].x * w), int(face[i].y * h)] for i in cheek_indices
-        ], dtype=np.int32)
+        def get_cheek_lab(indices):
+            polygon = np.array([[int(face[i].x * w), int(face[i].y * h)] for i in indices], dtype=np.int32)
+            mask = np.zeros((h,w), dtype=np.uint8)
+            cv2.fillPoly(mask, [polygon], 255)
+            pixels = image[mask > 0]
+            pixels_float = pixels.astype(np.float32) / 255.0
+            pixel_reshaped = pixels_float.reshape(1, -1, 3)
+            return cv2.cvtColor(pixel_reshaped, cv2.COLOR_RGB2LAB)[0]
 
-        #creation of mask and pixels
-        mask = np.zeros((h, w), dtype=np.uint8)
-        cv2.fillPoly(mask, [polygon_points], 255)
+        left_lab = get_cheek_lab(left_cheek_indices)
+        right_lab = get_cheek_lab(right_cheek_indices)
 
-        # bitwise_and to get the pixels of the polygon
-        cheek_pixels = image[mask > 0] # Array of RGB pixels
+        left_mean_L = left_lab[:, 0].mean()
+        right_mean_L = right_lab[:, 0].mean()
 
-        # Color conversion to LAB
-        cheek_pixels_float = cheek_pixels.astype(np.float32) / 255.0
-        cheek_pixels_reshaped = cheek_pixels_float.reshape(1, -1, 3)
-        lab_pixels = cv2.cvtColor(cheek_pixels_reshaped, cv2.COLOR_RGB2LAB)[0]
+        if right_mean_L > left_mean_L:
+            best_cheek_lab = right_lab
+        else:
+            best_cheek_lab = left_lab
 
         # sort based on lightness
-        sorted_indices = lab_pixels[:, 0].argsort()
-        sorted_labs = lab_pixels[sorted_indices]
+        sorted_indices = best_cheek_lab[:, 0].argsort()
+        sorted_labs = best_cheek_lab[sorted_indices]
 
-        # dropping the first and last 20%
         num_pixels = len(sorted_labs)
         lower_bound = int(num_pixels * 0.40)
         upper_bound = int(num_pixels * 0.95)
