@@ -167,7 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
         cameraCanvas.height = webcamVideo.videoHeight || 480;
 
         const context = cameraCanvas.getContext('2d');
-        context.drawImage(webcamVideo, 0, 0, cameraCanvas.width, cameraCanvas.height);
+        // Un-mirror the frame: the video is CSS scaleX(-1), so we flip the canvas
+        // draw to send a correctly-oriented image to the face detection backend.
+        context.save();
+        context.scale(-1, 1);
+        context.drawImage(webcamVideo, -cameraCanvas.width, 0, cameraCanvas.width, cameraCanvas.height);
+        context.restore();
 
         cameraCanvas.toBlob((blob) => {
             if (blob) {
@@ -209,6 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
+            // Backend returns null when no face is detected in the image
+            if (data === null) {
+                throw new Error('NO_FACE');
+            }
+
             if (!Array.isArray(data) || data.length === 0) {
                 throw new Error("Invalid response format.");
             }
@@ -217,9 +227,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('API Error:', error);
-            statusText.innerText = "Error analyzing frame. Please try again.";
+            if (error.message === 'NO_FACE') {
+                statusText.innerText = "No face detected. Please use a clearer, well-lit selfie.";
+            } else {
+                statusText.innerText = "Error analyzing image. Please try again.";
+            }
             statusText.style.color = "#BE4B5E";
-            setTimeout(() => { resetUI(true); }, 3000);
+            setTimeout(() => { resetUI(true); }, 3500);
         }
     }
 
