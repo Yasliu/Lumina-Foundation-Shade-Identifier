@@ -89,8 +89,10 @@ def find_comparison(image):
 def find_my_match(target_lab):
     foundation_matrix = df[['L_val', 'a_val', 'b_val']].values.astype(float)
 
+    target_matrix = np.tile(target_lab, (len(foundation_matrix), 1))
+
     temp_df = df.copy()
-    temp_df['dist'] = deltaE_ciede2000(target_lab, foundation_matrix)
+    temp_df['dist'] = deltaE_ciede2000(target_matrix, foundation_matrix)
     temp_df = temp_df.sort_values('dist')
 
     # Ensuring non-duplicate brands for variation
