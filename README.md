@@ -11,7 +11,7 @@ pinned: false
 
 An end-to-end computer vision and machine learning pipeline designed to find the mathematically perfect foundation makeup match from a single selfie.
 
-Instead of relying on basic Hex/RGB comparisons which fail to accurately represent human skin, this application leverages the CIELAB color space, advanced CIE2000 Delta-E algorithms, and dynamic spatial averaging to match extracted skin tones against a database of over 5,000 real-world cosmetic products.
+Instead of relying on basic Hex/RGB comparisons which fail to accurately represent human skin, this application leverages the CIELAB color space, advanced CIE2000 Delta-E algorithms, and dynamic spatial averaging to match extracted skin tones against a database of over 4,000+ real-world cosmetic products.
 
 ## The Problem We Solve
 
@@ -36,7 +36,7 @@ Current virtual shade-matching tools fail consumers across several critical tech
 ## The Architecture Pipeline
 
 1. **Dynamic Facial Mapping:** Utilizes Google's MediaPipe FaceLandmarker to detect facial topology and extract precise, multi-point polygon regions of both the left and right cheeks.
-2. **Lighting Compensation & Asymmetric Trim:** Evaluates the perceived luminance of both extracted regions, automatically discarding the polygon located in shadow. The system then flattens the well-lit pixels and applies an asymmetric statistical trim (dropping the bottom 40% of shadow/contour pixels and the top 5% of specular glare) to isolate the pure True Base skin color.
+2. **Lighting Compensation & Asymmetric Trim:** Evaluates the perceived luminance of both extracted regions, automatically discarding the polygon located in shadow. The system then flattens the well-lit pixels and applies an asymmetric statistical trim (dropping the bottom 40% of shadow/contour pixels and the top 20% of specular glare) to isolate the pure True Base skin color.
 3. **Mathematical Translation:** Converts the extracted, trimmed RGB array into the CIELAB color space, which maps directly to how the human eye actually perceives color differences.
 4. **The Matching Engine:** Computes the highly optimized $\Delta E_{00}$ (CIE2000) distance between the user's isolated LAB coordinates and a pre-cleaned dataset of foundation shades, filtering for the top 3 perceptually perfect matches across unique cosmetic brands.
 
